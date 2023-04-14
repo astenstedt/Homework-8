@@ -1,6 +1,6 @@
-# Your name: 
-# Your student id:
-# Your email:
+# Your name: Ariane Stenstedt
+# Your student id: 71570663
+# Your email: astens@umich.edu
 # List who you have worked with on this homework:
 
 import matplotlib.pyplot as plt
@@ -15,7 +15,24 @@ def load_rest_data(db):
     and each inner key is a dictionary, where the key:value pairs should be the category, 
     building, and rating for the restaurant.
     """
-    pass
+    conn = sqlite3.connect(db)
+    cur = conn.cursor()
+    cur.execute('SELECT * FROM db')
+    rows = cur.fetchall()
+    d = {}
+    headings = ['name', 'category_id', 'building_id', 'rating']
+
+    for place in rows:
+        dictionary = d
+        for i in range(len(headings)):
+            if i == len(headings) - 1:
+                dictionary[rows[i]] = {}
+            else:
+                if rows[i] not in dictionary:
+                    dictionary[rows[i]] = {}
+                dictionary = dictionary[rows[i]]
+    conn.close()
+    return d
 
 def plot_rest_categories(db):
     """
