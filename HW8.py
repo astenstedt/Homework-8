@@ -45,13 +45,26 @@ def plot_rest_categories(db):
     cur.execute('SELECT names FROM db')
     rows = cur.fetchall()
     d = {}
+    category = []
+    count = []
 
     for place in rows:
-        category = place[0]
-        count = place[1]
-        d[category] = count
+        category.append(palce[0])
+        count.append(place[1])
+        
 
     conn.close()
+
+    plt.barh(category, count)
+    plt.title('Restaurants on South University')
+    plt.xlabel('Number of Restaurants')
+    plt.ylabel('Restaurant Categories')
+
+    category = [cat for _, cat in sorted(zip(count, category), reverse=True)]
+    count = sorted(count, reverse=True)
+    plt.show()
+
+    d[category] = count
     return d
 
 
